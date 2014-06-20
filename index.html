@@ -10,16 +10,27 @@
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
+        var loadNew = "<button class='load-new'>Load New Tweets</button>";
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
+        $body.append(loadNew);
+        $body.append('<div class="tweets"></div>')
+
+        var loadTweets = function(){
+          var index = streams.home.length - 1;
+          var tweetHTMLArray = [];
+          while(index >= 0){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message + ' | ' + tweet.created_at);
+            tweetHTMLArray.push($tweet);
+            index -= 1;
+          }
+          $('.tweets').html(tweetHTMLArray)
         }
 
+        $('.load-new').on('click', loadTweets);
+
+        loadTweets();
       });
 
     </script>
