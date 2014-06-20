@@ -22,7 +22,21 @@
           while(index >= 0){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            $tweet.html("<span class='user'>" + '@' +  tweet.user + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
+            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
+            tweetHTMLArray.push($tweet);
+            $tweet.fadeIn();
+            index -= 1;
+          }
+          $('.tweets').html(tweetHTMLArray);
+        }
+
+        var loadUserTweets = function(){
+          var index = streams.home.length - 1;
+          var tweetHTMLArray = [];
+          while(index >= 0){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
             tweetHTMLArray.push($tweet);
             $tweet.fadeIn();
             index -= 1;
@@ -33,6 +47,24 @@
         $('.load-new').on('click', loadTweets);
 
         loadTweets();
+
+        $('.user').on('click', function(){
+          var userNameElement = $(this).find(".user-name");
+          var userName = userNameElement.text()
+          // console.log(userName)
+          // console.log(streams.users[userName])
+          var userTweetObject = streams.users[userName]
+
+          var tweetHTMLArray = [];
+          for(var key in userTweetObject){
+            var tweet = userTweetObject[key];
+            var $tweet = $('<div></div>');
+            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
+            tweetHTMLArray.push($tweet);
+            $tweet.fadeIn();
+          }
+          $('.tweets').html(tweetHTMLArray);
+        });
       });
 
     </script>
