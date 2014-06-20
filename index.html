@@ -3,6 +3,7 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
     <script>
@@ -21,11 +22,12 @@
           while(index >= 0){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message + ' | ' + tweet.created_at);
+            $tweet.html("<span class='user'>" + '@' +  tweet.user + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
             tweetHTMLArray.push($tweet);
+            $tweet.fadeIn();
             index -= 1;
           }
-          $('.tweets').html(tweetHTMLArray)
+          $('.tweets').html(tweetHTMLArray);
         }
 
         $('.load-new').on('click', loadTweets);
