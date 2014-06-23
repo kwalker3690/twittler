@@ -60,6 +60,10 @@ body{
 	margin: 10px 0;
 }
 
+.user:hover{
+	cursor: pointer;
+}
+
 .message {
 	font-size: 40px;
 }

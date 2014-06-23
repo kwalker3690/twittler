@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="jquery.js"></script>
+    <script src="jquery.timeago.js"></script>
     <script src="data_generator.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
@@ -22,7 +23,7 @@
           while(index >= 0){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
+            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + $.timeago(tweet.created_at) + "</span>");
             tweetHTMLArray.push($tweet);
             $tweet.fadeIn();
             index -= 1;
@@ -49,10 +50,9 @@
         loadTweets();
 
         $('.user').on('click', function(){
+          //could add in ability to toggle back to all, have a headline of their name etc
           var userNameElement = $(this).find(".user-name");
           var userName = userNameElement.text()
-          // console.log(userName)
-          // console.log(streams.users[userName])
           var userTweetObject = streams.users[userName]
 
           var tweetHTMLArray = [];
