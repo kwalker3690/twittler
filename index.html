@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script type="text/javascript">
+        var getName = function() {
+          var name = prompt('What is your username?');
+          return name;
+        }
+
+        var visitor = getName();
+    </script>
     <script src="jquery.js"></script>
+    <script src="watch.js"></script>
     <script src="jquery.timeago.js"></script>
     <script src="data_generator.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -9,6 +18,12 @@
   <body>
 
     <button class='load-new'>Load New Tweets</button>
+    <div class='add-new'>
+      <form>
+        <input class="add-new-tweet">
+        <a href="#" type="submit" class="add-new-button">Tweet</a>
+      </form>
+    </div>
 
     <div class="tweets"></div>
     <script>
@@ -28,13 +43,27 @@
             var tweet = streams.home[index];
             tweetHTMLArray.push(tweetHTML(tweet).fadeIn());
             index -= 1;
-          }
+          };
           $('.tweets').html(tweetHTMLArray);
-        }
-
-        $('.load-new').on('click', loadTweets)
+        };
 
         loadTweets();
+
+        $(".add-new-button").on('click', function(){
+          var tweetText = $(".add-new-tweet").val();
+          writeTweet(tweetText);
+          $(".add-new-tweet").val('')
+          loadTweets();
+        })
+
+        watch(streams, 'home', function(){
+          $('.load-new').slideDown('fast');
+        })
+
+        $('.load-new').on('click', function(){
+          loadTweets();
+          $('.load-new').slideUp('fast');
+        })
 
         $('.user').on('click', function(){
           //could add in ability to toggle back to all, have a headline of their name etc
