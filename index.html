@@ -7,45 +7,32 @@
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
+
+    <button class='load-new'>Load New Tweets</button>
+
+    <div class="tweets"></div>
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
-        var loadNew = "<button class='load-new'>Load New Tweets</button>";
 
-        $body.append(loadNew);
-        $body.append('<div class="tweets"></div>')
+        var tweetHTML = function(tweet) {
+          var $tweet = $('<div></div>');
+          $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + $.timeago(tweet.created_at) + "</span>");
+          return $tweet;
+        }
 
         var loadTweets = function(){
           var index = streams.home.length - 1;
           var tweetHTMLArray = [];
           while(index >= 0){
             var tweet = streams.home[index];
-            var $tweet = $('<div></div>');
-            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + $.timeago(tweet.created_at) + "</span>");
-            tweetHTMLArray.push($tweet);
-            $tweet.fadeIn();
+            tweetHTMLArray.push(tweetHTML(tweet).fadeIn());
             index -= 1;
           }
           $('.tweets').html(tweetHTMLArray);
         }
 
-        var loadUserTweets = function(){
-          var index = streams.home.length - 1;
-          var tweetHTMLArray = [];
-          while(index >= 0){
-            var tweet = streams.home[index];
-            var $tweet = $('<div></div>');
-            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
-            tweetHTMLArray.push($tweet);
-            $tweet.fadeIn();
-            index -= 1;
-          }
-          $('.tweets').html(tweetHTMLArray);
-        }
-
-        $('.load-new').on('click', loadTweets);
+        $('.load-new').on('click', loadTweets)
 
         loadTweets();
 
@@ -58,10 +45,7 @@
           var tweetHTMLArray = [];
           for(var key in userTweetObject){
             var tweet = userTweetObject[key];
-            var $tweet = $('<div></div>');
-            $tweet.html("<span class='user'>" + '@' + "<span class='user-name'>" + tweet.user + "</span>" + "</span>" +"<span class='message'>" + tweet.message + "</span>" + "<span class='time'>" + tweet.created_at + "</span>");
-            tweetHTMLArray.push($tweet);
-            $tweet.fadeIn();
+            tweetHTMLArray.push(tweetHTML(tweet));
           }
           $('.tweets').html(tweetHTMLArray);
         });

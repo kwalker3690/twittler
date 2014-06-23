@@ -62,6 +62,7 @@ body{
 
 .user:hover{
 	cursor: pointer;
+	text-decoration: underline;
 }
 
 .message {
